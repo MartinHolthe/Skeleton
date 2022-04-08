@@ -1,0 +1,15 @@
+version: '3.3'
+services:
+  angular-docker:
+    container_name: angular-docker-container
+    build: ./angular-docker
+    ports:
+      - '9000:80'
+  postgres:
+    container_name: postgres-docker-container
+    restart: always
+    build: ./postgres-docker
+    volumes:
+      - /var/lib/postgres-docker
+    ports:
+      - "5432:5432"
