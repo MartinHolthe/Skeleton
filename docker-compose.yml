@@ -1,10 +1,5 @@
 version: '3.3'
 services:
-  angular-docker:
-    container_name: angular-docker-container
-    build: ./angular-docker
-    ports:
-      - '9000:80'
   postgres:
     container_name: postgres-docker-container
     restart: always
@@ -12,4 +7,23 @@ services:
     volumes:
       - /var/lib/postgres-docker
     ports:
-      - "5433:5432"
+      - "5432:5432"
+  
+  node-docker:
+    container_name: node-docker-container
+    restart: always
+    build: ./node-docker
+    ports:
+      - "8080:8080"
+    depends_on:
+      - postgres
+
+  angular-docker:
+    container_name: angular-docker-container
+    build: ./angular-docker
+    ports:
+      - '9000:80'
+    depends_on:
+      - postgres
+
+  
