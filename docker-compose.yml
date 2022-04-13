@@ -1,4 +1,4 @@
-version: '3.3'
+version: "3.8"
 services:
   postgres:
     container_name: postgres-docker-container
@@ -7,14 +7,21 @@ services:
     volumes:
       - /var/lib/postgres-docker
     ports:
-      - "5432:5432"
-  
+      - "5433:5432"
+
   node-docker:
     container_name: node-docker-container
     restart: always
-    build: ./node-docker
+    build:
+      context: ./node-docker
+      target: dev
+    volumes:
+      - ./node-docker:/src
     ports:
       - "8080:8080"
+    environment:
+      DATABASE_URL: postgres://postgres:postgres@node-docker-container:5432/testdb
+      NODE_ENV: dev
     depends_on:
       - postgres
 
@@ -22,8 +29,8 @@ services:
     container_name: angular-docker-container
     build: ./angular-docker
     ports:
-      - '9000:80'
+      - "9000:80"
     depends_on:
       - postgres
-
-  
+#volumes: db-data
+#use named volumes
