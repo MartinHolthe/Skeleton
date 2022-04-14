@@ -8,8 +8,8 @@ services:
       - /var/lib/postgres-docker
     ports:
       - '5433:5432'
-    environment:
-      - .env
+    #environment:
+    #  - ./.env
 
   node-docker:
     container_name: node-docker-container
