@@ -13,6 +13,7 @@ CMD ["node", "server.js"]
 
 FROM base as dev
 ENV NODE_ENV=development
+RUN npm install --global nodemon
 RUN npm install
 COPY . /src
 CMD ["npm", "run", "dev"]
