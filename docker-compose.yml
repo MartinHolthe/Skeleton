@@ -7,7 +7,7 @@ services:
     volumes:
       - /var/lib/postgres-docker
     ports:
-      - '5433:5432'
+      - '5432:5432'
     #environment:
     #  - ./.env
 
@@ -20,7 +20,7 @@ services:
     volumes:
       - ./node-docker:/src
     ports:
-      - '8080:8080'
+      - '8081:8080'
     environment:
       DATABASE_URL: postgres://postgres:postgres@node-docker-container:5432/testdb
       NODE_ENV: dev
@@ -40,6 +40,23 @@ services:
     build: ./flask-docker
     ports:
       - '5000:5000'
+    depends_on:
+      - postgres
+
+  keycloak:
+    image: jboss/keycloak
+    container_name: keycloak
+    # restart: on-failure
+    environment:
+      - DB_VENDOR=POSTGRES
+      - DB_ADDR=postgres
+      - DB_DATABASE=testdb
+      - DB_USER=postgres
+      - DB_PASSWORD=postgres
+      - KEYCLOAK_USER=admin
+      - KEYCLOAK_PASSWORD=password
+    ports:
+      - '8180:8080'
     depends_on:
       - postgres
 #volumes: db-data
