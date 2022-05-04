@@ -1,15 +1,19 @@
 version: '3.8'
 services:
   postgres:
+    image: postgres
     container_name: postgres-docker-container
     restart: always
-    build: ./postgres-docker
+    environment:
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_USER: postgres
+      POSTGRES_DB: testdb
     volumes:
-      - /var/lib/postgres-docker
+      - ./postgres-docker/init.sql:/docker-entrypoint-initdb.d/init.sql
+      - ./postgres-docker/auth.sql:/docker-entrypoint-initdb.d/auth.sql
+    #  - /var/lib/postgres-docker
     ports:
       - '5432:5432'
-    #environment:
-    #  - ./.env
 
   node-docker:
     container_name: node-docker-container
@@ -50,9 +54,9 @@ services:
     environment:
       - DB_VENDOR=POSTGRES
       - DB_ADDR=postgres
-      - DB_DATABASE=testdb
-      - DB_USER=postgres
-      - DB_PASSWORD=postgres
+      - DB_DATABASE=keycloak
+      - DB_USER=keycloak
+      - DB_PASSWORD=keycloak
       - KEYCLOAK_USER=admin
       - KEYCLOAK_PASSWORD=password
     ports:

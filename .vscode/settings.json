@@ -1,14 +1,24 @@
 {
-  "sqltools.connections": [
-    {
-      "previewLimit": 50,
-      "server": "localhost",
-      "port": 5433,
-      "driver": "PostgreSQL",
-      "database": "testdb",
-      "username": "postgres",
-      "name": "postgres",
-      "password": "postgres"
-    }
-  ]
+	"sqltools.connections": [
+		{
+			"previewLimit": 50,
+			"server": "localhost",
+			"port": 5432,
+			"driver": "PostgreSQL",
+			"database": "testdb",
+			"username": "postgres",
+			"name": "postgres",
+			"password": "postgres"
+		},
+		{
+			"previewLimit": 50,
+			"server": "localhost",
+			"port": 5432,
+			"driver": "PostgreSQL",
+			"database": "keycloak",
+			"username": "keycloak",
+			"password": "keycloak",
+			"name": "postgres"
+		}
+	]
 }
