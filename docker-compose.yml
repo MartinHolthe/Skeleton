@@ -8,12 +8,16 @@ services:
       POSTGRES_PASSWORD: postgres
       POSTGRES_USER: postgres
       POSTGRES_DB: testdb
+    #env_file:
+    #  - .env
     volumes:
       - ./postgres-docker/init.sql:/docker-entrypoint-initdb.d/init.sql
       - ./postgres-docker/auth.sql:/docker-entrypoint-initdb.d/auth.sql
-    #  - /var/lib/postgres-docker
+    # to bind-mount -> - ./db-data/:/var/lib/postgresql/data/
+      - db-data:/var/lib/postgresql/data/
     ports:
       - '5432:5432'
+    
   
   keycloak:
     image: jboss/keycloak
@@ -63,6 +67,9 @@ services:
       - '5000:5000'
     depends_on:
       - postgres
-      
-#volumes: db-data
+
+volumes:
+  db-data:
+    external: true      
 #use named volumes
+#in terminal. docker create db-data
